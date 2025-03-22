@@ -4,7 +4,7 @@ import { fetchMovieCast, IMAGE_URL } from "../../services/api";
 
 function MovieCast() {
   const { movieId } = useParams();
-  const { cast, setCast } = useState([]);
+  const [cast, setCast] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -29,11 +29,11 @@ function MovieCast() {
   if (!cast || cast.length === 0) return <p>No cast information available.</p>;
 
   return (
-    <div className={styles.cast - container}>
+    <div>
       <h3>Cast</h3>
-      <ul className="cast-list">
+      <ul>
         {cast.map(({ id, name, profile_path }) => (
-          <li className={styles.cast - item} key={id}>
+          <li key={id}>
             {profile_path ? (
               <img src={`${IMAGE_URL}${profile_path}`} alt={name} width="50" />
             ) : (
