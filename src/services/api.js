@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_KEY = "9cf0d16a67b46f086c1bdd0c1522ebe1";
+const API_KEY =
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5Y2YwZDE2YTY3YjQ2ZjA4NmMxYmRkMGMxNTIyZWJlMSIsIm5iZiI6MTc0MjU3ODQ4Ni44NDA5OTk4LCJzdWIiOiI2N2RkYTMzNjVmOTc3ODM2YWI3YTdkMTciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.ONyxclzNjsfY9Cs-RxfKXY7bnF56ltgpDEGYLZI6Gck";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 

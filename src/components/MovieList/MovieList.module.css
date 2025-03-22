@@ -1,0 +1,26 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.list li {
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.list li:hover {
+  background: #e0e0e0;
+}
+
+.list a {
+  font-size: 18px;
+  color: #007bff;
+}
+
+.list a:hover {
+  text-decoration: underline;
+}
