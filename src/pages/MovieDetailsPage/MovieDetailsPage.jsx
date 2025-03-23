@@ -1,23 +1,27 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, Outlet, useLocation } from "react-router-dom";
 import { fetchMovieDetails, IMAGE_URL } from "../../services/api";
-// import styles from "./MovieDetailsPage.modulle.css";
 
 function MovieDetailsPage() {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const location = useLocation();
-  const backLink = location.state?.from || "/movies";
+  const backLinkRef = useRef(location.state?.from || "/movies");
 
   useEffect(() => {
-    fetchMovieDetails(movieId).then(setMovie);
+    async function getMovie() {
+      const data = await fetchMovieDetails(movieId);
+      setMovie(data);
+    }
+
+    getMovie();
   }, [movieId]);
 
   if (!movie) return <p>Loading...</p>;
 
   return (
     <div>
-      <Link to={backLink}>Go back</Link>
+      <Link to={backLinkRef.current}>Go back</Link>
       <h1>{movie.title}</h1>
       <img src={`${IMAGE_URL}${movie.poster_path}`} alt={movie.title} />
       <p>{movie.overview}</p>

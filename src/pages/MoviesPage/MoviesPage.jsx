@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { searchMovies } from "../../services/api";
 import MovieList from "../../components/MovieList/MovieList";
 
@@ -6,11 +7,23 @@ function MoviesPage() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
 
+  useEffect(() => {
+    if (!query) return;
+
+    async function fetchMovies() {
+      const results = await searchMovies(query);
+      setMovies(results);
+    }
+
+    fetchMovies();
+  }, [query]);
+
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (!query) return;
-    const results = await searchMovies(query);
-    setMovies(results);
+    const searchValue = e.target.elements.search.value.trim();
+    if (!searchValue) return;
+
+    setSearchParams({ query: searchValue });
   };
 
   return (
