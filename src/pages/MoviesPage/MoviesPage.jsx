@@ -1,24 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { searchMovies } from "../../services/api";
 import MovieList from "../../components/MovieList/MovieList";
 
 function MoviesPage() {
-  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query") || "";
 
   useEffect(() => {
-    if (!query) return;
-
-    async function fetchMovies() {
-      const results = await searchMovies(query);
-      setMovies(results);
+    if (!query) {
+      setMovies([]);
+      return;
     }
 
-    fetchMovies();
+    async function fetchMovies(searchQuery) {
+      try {
+        const results = await searchMovies(searchQuery);
+        setMovies(results);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    }
+
+    fetchMovies(query);
   }, [query]);
 
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = e.target.elements.search.value.trim();
     if (!searchValue) return;
@@ -32,8 +40,8 @@ function MoviesPage() {
       <form onSubmit={handleSearch}>
         <input
           type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          name="search"
+          defaultValue={query}
           placeholder="Enter movie name"
         />
         <button type="submit">Search</button>
